@@ -23,9 +23,8 @@ import java.util.Set;
 })
 @ToString
 @Getter
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Article {
+public class Article extends AuditingFields{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //게시물 id
@@ -40,14 +39,6 @@ public class Article {
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     @ToString.Exclude
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
-
-    @CreatedDate @Column(nullable = false) private LocalDateTime createDate; //생성일시
-
-    @CreatedBy @Column(nullable = false, length = 100) private String createUser; //생성자
-
-    @LastModifiedDate @Column(nullable = false) private LocalDateTime updateDate; //수정일시
-
-    @LastModifiedBy @Column(nullable = false, length = 100) private String updateUser; //수정자
 
     protected Article() {
     }
