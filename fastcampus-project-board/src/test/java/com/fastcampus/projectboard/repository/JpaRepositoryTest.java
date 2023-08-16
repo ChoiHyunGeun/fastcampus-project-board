@@ -33,6 +33,6 @@ class JpaRepositoryTest {
         long newCount = articleRepository.count();
 
         //then
-        assertThat(preCount).isEqualTo(newCount-1);
+        assertThat(preCount).isEqualTo(newCount+1);
     }
 }
