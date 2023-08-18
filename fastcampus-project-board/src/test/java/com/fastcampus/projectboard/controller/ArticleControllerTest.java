@@ -54,7 +54,7 @@ class ArticleControllerTest {
     void boardDetailView() throws Exception {
         mvc.perform(get("/articles/1"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.TEXT_HTML))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/detail"))
                 /**
                  * 서버에서 데이터를 넘겨줄 때 화면으로 데이터가 넘어오는지 확인
@@ -70,7 +70,7 @@ class ArticleControllerTest {
     void boardSearchView() throws Exception {
         mvc.perform(get("/articles/search"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.TEXT_HTML))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/search"));
     }
 
@@ -80,7 +80,7 @@ class ArticleControllerTest {
     void boardHashtagSearchView() throws Exception {
         mvc.perform(get("/articles/search-hashtag"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.TEXT_HTML))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/search-hashtag"));
     }
 }
