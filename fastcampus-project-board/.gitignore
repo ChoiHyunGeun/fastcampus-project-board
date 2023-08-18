@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,gradle,intellij+all,windows,macos,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,gradle,intellij+all,windows,macos,visualstudiocode
 
+## QueryDSL --> QClass는 자동생성된 파일이고 테이블과 관련하여 매번 변경이 생길 수 있는 파일이기 때문에 반영되어선 안됨
+/src/main/generated
+
 ### Intellij+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
