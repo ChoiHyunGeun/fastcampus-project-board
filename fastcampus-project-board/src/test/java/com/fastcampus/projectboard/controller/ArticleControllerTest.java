@@ -25,13 +25,17 @@ class ArticleControllerTest {
         this.mvc = mvc;
     }
 
-    @Disabled("구현 중")
     @DisplayName("view Get 게시판")
     @Test
     void boardView() throws Exception {
         mvc.perform(get("/articles"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.TEXT_HTML))
+                /**
+                 * text/html을 예상했지만 text/html charset=UTF-8이 리턴됨
+                 * contentType() -> contentTypeCompatibleWith()로 변경
+                 * 그러면 호환되는 타입까지 전부 맞다고 해줌
+                 */
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 /**
                  * 화면의 이름을 체크하는 기능인 것 같음
                  * 다시 한 번 확인하기
