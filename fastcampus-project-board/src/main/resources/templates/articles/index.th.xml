@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<thlogic>
+    <!--  해당 파일명이 index.th.xml이라서 파일명이 index인 파일을 찾아서 header라는 엘리먼트를 찾아서 이 코드를 삽입해줌  -->
+    <!--  만약 header라는 엘리먼트가 많을 경우 id로 설정해서 #id명으로 설정해서 id를 맵핑하게끔 구현하면 됨  -->
+    <attr sel="#header" th:replace="header :: header"/>
+
+    <!--root경로에 있는 footer 파일에서 footer 엘리먼트를 찾아가라는 의미. 그 엘리먼트 내용으로 replace 한다는 말-->
+    <attr sel="#footer" th:replace="footer :: footer" />
+</thlogic>
