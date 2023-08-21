@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
     <!--root 경로에서 header 파일을 찾아서 그 파일의 header 엘리먼트를 찾으라는 의미. 그 엘리먼트의 내용으로 replace 하겠다는 말-->
-    <header th:replace="~{header :: header}"></header>
+    <header id="header"></header>
     <main>
         <form>
             <label for="search-type" hidden>유형</label>
@@ -66,7 +66,7 @@
             </table>
         </nav>
     </main>
-    <!--root경로에 있는 footer 파일에서 footer 엘리먼트를 찾아가라는 의미. 그 엘리먼트 내용으로 replace 한다는 말-->
-    <footer th:replace="~{footer :: footer}"></footer>
+
+    <footer id="footer"></footer>
 </body>
 </html>
