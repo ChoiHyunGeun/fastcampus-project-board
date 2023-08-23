@@ -1,10 +1,12 @@
 package com.fastcampus.projectboard.controller;
 
+import com.fastcampus.projectboard.config.SecurityConfig;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -15,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @DisplayName("viewController - 게시글")
+@Import(SecurityConfig.class)
 @WebMvcTest(ArticleController.class) // > 매개변수 없이 선언하면 모든 컨트롤러를 가져옴. 그럴 필요 없이 테스트 대상이 되는 컨트롤러만 선언하여 Bean으로 읽어들이기
 class ArticleControllerTest {
     private final MockMvc mvc;
