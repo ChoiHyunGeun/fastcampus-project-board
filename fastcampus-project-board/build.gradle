@@ -45,6 +45,9 @@ dependencies {
 
     // @ConfigurationProperties를 사용하기 위한 의존성
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 }
 
 tasks.named('test') {
