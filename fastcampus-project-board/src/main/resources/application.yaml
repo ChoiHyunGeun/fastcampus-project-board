@@ -21,9 +21,13 @@ spring:
       hibernate.format_sql: true
       hibernate.default_batch_fetch_size: 100
   sql.init.mode: always
-  data.rest:
-    base-path: /api
-    detection-strategy: annotated
+  data:
+    rest:
+      base-path: /api
+      detection-strategy: annotated
+    web:
+      pageable:
+        default-page-size: 10
   thymeleaf3:
     decoupled-logic: true
 ---
