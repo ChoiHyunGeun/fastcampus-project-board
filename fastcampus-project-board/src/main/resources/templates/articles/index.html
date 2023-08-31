@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        <table class="table">
+        <table id="article-table" class="table">
             <thead>
                 <tr>
                     <th class="col-6">제목</th>
@@ -59,39 +59,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="article : ${articles}">
-                    <td th:text="${article.title}">title placeHolder</td>
-                    <td th:text="${article.hashtag}">title placeHolder</td>
-                    <td th:text="${article.createUser}">title placeHolder</td>
-                    <td th:text="${article.createDate}">title placeHolder</td>
+                <tr>
+                    <td class="title"><a></a></td>
+                    <td class="hashtag"></td>
+                    <td class="user-id"></td>
+                    <td class="createDate"><time></time></td>
                 </tr>
             </tbody>
         </table>
 
-        <nav>
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:unless="${articles.first}">
-                    <a class="page-link" th:href="@{/articles?page=0}">First</a>
-                </li>
-                <li class="page-item" th:unless="${articles.first}">
-                    <a class="page-link" th:href="@{'/articles'(page=${articles.number-1})}">Previous</a>
-                </li>
-                <li class="page-item" th:each="item : ${#numbers.sequence(0, articles.totalPages-1)}">
-                    <a class="page-link" th:href="@{'/articles'(page=${item})}" th:text="${item + 1}">Page number</a>
-                </li>
-                <li class="page-item" th:unless="${articles.last}">
-                    <a class="page-link" th:href="@{'/articles'(page=${articles.number+1})}">Next</a>
-                </li>
-                <li class="page-item" th:unless="${articles.last}">
-                    <a class="page-link" th:href="@{'/articles'(page=${articles.totalPages-1})}">Last</a>
-                </li>
-<!--                <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
-            </ul>
-        </nav>
+        <nav></nav>
 
         <footer id="footer"></footer>
     </main>

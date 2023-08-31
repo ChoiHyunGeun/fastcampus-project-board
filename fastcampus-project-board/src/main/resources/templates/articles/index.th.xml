@@ -6,4 +6,17 @@
 
     <!--root경로에 있는 footer 파일에서 footer 엘리먼트를 찾아가라는 의미. 그 엘리먼트 내용으로 replace 한다는 말-->
     <attr sel="#footer" th:replace="footer :: footer" />
+
+    <attr sel="nav" th:replace="navigator::nav"/>
+
+    <attr sel="#article-table">
+        <attr sel="tbody">
+            <attr sel="tr" th:each="article : ${articles}">
+                <attr sel="td.title/a" th:text="${article.title}" th:href="@{'/articles/' + ${article.id}}"/>
+                <attr sel="td.hashtag" th:text="${article.hashtag}" />
+                <attr sel="td.user-id" th:text="${article.nickname}" />
+                <attr sel="td.createDate/time" th:datetime="${article.createDate}" th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd')}"/>
+            </attr>
+        </attr>
+    </attr>
 </thlogic>
