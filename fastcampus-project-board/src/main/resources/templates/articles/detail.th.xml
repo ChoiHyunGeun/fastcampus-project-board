@@ -6,4 +6,26 @@
 
     <!--root경로에 있는 footer 파일에서 footer 엘리먼트를 찾아가라는 의미. 그 엘리먼트 내용으로 replace 한다는 말-->
     <attr sel="#footer" th:replace="footer :: footer" />
+
+    <attr sel="#nickname" th:text="${article.createUser}"/>
+
+    <attr sel="#title" th:text="${article.title}"/>
+
+    <attr sel="#id" th:text="${article.userAccountDto.email}"/>
+
+    <attr sel="#createDate" th:text="${article.createDate}"/>
+
+    <attr sel="#hashtag" th:text="${article.hashtag}"/>
+
+    <attr sel="#content" th:text="${article.content}"/>
+
+    <attr sel="#article-comments">
+        <attr sel="li" th:each="comment : ${articleComments}">
+            <attr sel="div">
+                <attr sel="time.small" th:text="${comment.createDate}"/>
+                <attr sel="strong" th:text="${comment.createUser}"/>
+                <attr sel="p" th:text="${comment.content}"/>
+            </attr>
+        </attr>
+    </attr>
 </thlogic>

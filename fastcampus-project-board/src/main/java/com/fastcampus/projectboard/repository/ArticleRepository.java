@@ -4,6 +4,8 @@ import com.fastcampus.projectboard.domain.Article;
 import com.fastcampus.projectboard.domain.QArticle;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.StringExpression;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
@@ -17,6 +19,12 @@ public interface ArticleRepository extends
         QuerydslPredicateExecutor<Article>,     //Article 엔티티에 있는 모든 필드에 대한 기본 검색 기능 제공. 대소문자 구분하지 않고 부분 검색은 안된다.
         QuerydslBinderCustomizer<QArticle>      //위에서 안되는 부분 검색이 가능하도록 해줌
 {
+    Page<Article> findByTitleContaining(String title, Pageable pageable);
+    Page<Article> findByContentContaining(String content, Pageable pageable);
+    Page<Article> findByUserAccount_UserId(String userId, Pageable pageable);
+    Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
+    Page<Article> findByHashtag(String hashtag, Pageable pageable);
+
     // 검색에 대한 세부 기능 재정의
     // 인터페이스 파일이라 이 안에서 원래 구현을 넣을 수 없지만, Java8부터 가능해짐
     @Override
