@@ -34,7 +34,7 @@ public record ArticleWithCommentResponse(
                 dto.title(),
                 dto.content(),
                 dto.hashtag(),
-                dto.createdAt(),
+                dto.createDate(),
                 dto.userAccountDto().email(),
                 nickname,
                 dto.articleCommentDtos().stream()

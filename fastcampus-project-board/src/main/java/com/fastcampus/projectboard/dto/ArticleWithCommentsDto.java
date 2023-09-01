@@ -14,8 +14,8 @@ public record ArticleWithCommentsDto(
         String title,
         String content,
         String hashtag,
-        LocalDateTime createdAt,
-        String createdBy,
+        LocalDateTime createDate,
+        String createUser,
         LocalDateTime updateDate,
         String updateUser
 ) {
@@ -28,8 +28,8 @@ public record ArticleWithCommentsDto(
                 entity.getId(),
                 UserAccountDto.from(entity.getUserAccount()),
                 entity.getArticleComments().stream()
-                        .map(ArticleCommentDto::from)
-                        .collect(Collectors.toCollection(LinkedHashSet::new)),
+                .map(ArticleCommentDto::from)
+                .collect(Collectors.toCollection(LinkedHashSet::new)),
                 entity.getTitle(),
                 entity.getContent(),
                 entity.getHashtag(),

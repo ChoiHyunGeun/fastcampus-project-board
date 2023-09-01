@@ -2,7 +2,10 @@ package com.fastcampus.projectboard.controller;
 
 import com.fastcampus.projectboard.domain.Article;
 import com.fastcampus.projectboard.domain.type.SearchType;
+import com.fastcampus.projectboard.dto.ArticleCommentDto;
 import com.fastcampus.projectboard.dto.ArticleDto;
+import com.fastcampus.projectboard.dto.ArticleWithCommentsDto;
+import com.fastcampus.projectboard.dto.response.ArticleCommentResponse;
 import com.fastcampus.projectboard.dto.response.ArticleResponse;
 import com.fastcampus.projectboard.repository.ArticleRepository;
 import com.fastcampus.projectboard.service.ArticleService;
@@ -36,8 +39,11 @@ public class ArticleController {
 
     @GetMapping("/{articleId}")
     public String article(@PathVariable Long articleId, ModelMap map){
-        map.addAttribute("article", "article");
-        map.addAttribute("articleComments", List.of());
+
+        ArticleWithCommentsDto articleWithCommentsDto = articleService.getArticle(articleId);
+
+        map.addAttribute("article", articleWithCommentsDto);
+        map.addAttribute("articleComments", articleWithCommentsDto.articleCommentDtos());
         return "articles/detail";
     }
 
