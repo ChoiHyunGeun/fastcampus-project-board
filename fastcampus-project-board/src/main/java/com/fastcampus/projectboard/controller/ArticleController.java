@@ -9,6 +9,7 @@ import com.fastcampus.projectboard.dto.response.ArticleCommentResponse;
 import com.fastcampus.projectboard.dto.response.ArticleResponse;
 import com.fastcampus.projectboard.repository.ArticleRepository;
 import com.fastcampus.projectboard.service.ArticleService;
+import com.fastcampus.projectboard.service.PaginationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,13 +28,19 @@ import java.util.List;
 public class ArticleController {
     private final ArticleService articleService;
 
+    private final PaginationService paginationService;
     @GetMapping
     public String articles(@RequestParam(required = false) SearchType searchType,
                            @RequestParam(required = false) String searchValue,
                            @PageableDefault(size = 10, sort = "createDate", direction = Sort.Direction.DESC) Pageable pageable,
                            ModelMap map
                            ){
-        map.addAttribute("articles", articleService.searchArticles(searchType, searchValue, pageable).map(ArticleResponse::from));
+        Page<ArticleResponse> article = articleService.searchArticles(searchType, searchValue, pageable).map(ArticleResponse::from);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), article.getTotalPages());
+
+        map.addAttribute("articles", article);
+        map.addAttribute("paginationBarNumbers", barNumbers);
+
         return "articles/index";
     }
 
