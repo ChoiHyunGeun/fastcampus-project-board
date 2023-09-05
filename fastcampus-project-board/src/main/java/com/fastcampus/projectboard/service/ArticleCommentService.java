@@ -14,15 +14,20 @@ import java.util.List;
 @Service
 public class ArticleCommentService {
 
-    private final ArticleRepository articleRepository;
     private final ArticleCommentRepository articleCommentRepository;
 
     @Transactional(readOnly = true)
     public List<ArticleCommentDto> searchArticleComments(Long articleId) {
-        return List.of();
+        return articleCommentRepository.findByArticle_Id(articleId)
+                .stream()
+                .map(ArticleCommentDto::from)
+                .toList();
     }
 
     public void saveArticleComment(ArticleCommentDto dto) {
+        /**
+         * 1. controller에서 가져온 정보(dto)를 저장
+         */
     }
 
     public void updateArticleComment(ArticleCommentDto dto) {

@@ -13,8 +13,8 @@
             <li class="page-item" th:unless="${articles.first}">
                 <a class="page-link" th:href="@{'/articles'(page=${articles.number-1})}">Previous</a>
             </li>
-            <li class="page-item" th:each="item : ${#numbers.sequence(articles.number >= 5 ? (5 * (articles.number / 5)) : 0, (5 * (articles.number / 5))+4 > articles.totalPages-1 ? articles.totalPages-1 : (5 * (articles.number / 5))+4)}">
-                <a class="page-link" th:href="@{'/articles'(page=${item})}" th:text="${item + 1}">Page number</a>
+            <li class="page-item" th:each="item : ${paginationBarNumbers}">
+                <a th:class="'page-link' + (${articles.number} == ${item} ? ' disabled' : '')" th:href="@{'/articles'(page=${item})}" th:text="${item + 1}">Page number</a>
             </li>
             <li class="page-item" th:unless="${articles.last}">
                 <a class="page-link" th:href="@{'/articles'(page=${articles.number+1})}">Next</a>
@@ -22,6 +22,7 @@
             <li class="page-item" th:unless="${articles.last}">
                 <a class="page-link" th:href="@{'/articles'(page=${articles.totalPages-1})}">Last</a>
             </li>
+
         </ul>
     </nav>
 </body>
