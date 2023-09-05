@@ -10,6 +10,27 @@
     <attr sel="nav" th:replace="navigator::nav"/>
 
     <attr sel="#article-table">
+<!--        <attr sel="thead">-->
+<!--            <attr sel="tr">-->
+<!--                <attr sel="th.title/a" th:href="@{/articles(-->
+<!--                page=${articles.number},-->
+<!--                sort='title' + (*{articles.sort.getOrderFor('title')} != null ? (*{articles.sort.getOrderFor('title').direction.name} != 'DESC' ? ',desc' : '') : '')-->
+<!--                )}"/>-->
+<!--                <attr sel="th.hashtag/a" th:href="@{/articles(-->
+<!--                page=${articles.number},-->
+<!--                sort='hashtag' + (*{articles.sort.getOrderFor('hashtag')} != null ? (*{articles.sort.getOrderFor('hashtag').direction.name} != 'DESC' ? ',desc' : '') : '')-->
+<!--                )}"/>-->
+<!--                <attr sel="th.create-user/a" th:href="@{/articles(-->
+<!--                page=${articles.number},-->
+<!--                sort='createUser' + (*{articles.sort.getOrderFor('createUser')} != null ? (*{articles.sort.getOrderFor('createUser').direction.name} != 'DESC' ? ',desc' : '') : '')-->
+<!--                )}"/>-->
+<!--                <attr sel="th.create-date/a" th:href="@{/articles(-->
+<!--                page=${articles.number},-->
+<!--                sort='createDate' + (*{articles.sort.getOrderFor('createDate')} != null ? (*{articles.sort.getOrderFor('createDate').direction.name} != 'DESC' ? ',desc' : '') : '')-->
+<!--                )}"/>-->
+<!--            </attr>-->
+<!--        </attr>-->
+
         <attr sel="tbody">
             <attr sel="tr" th:each="article : ${articles}">
                 <attr sel="td.title/a" th:text="${article.title}" th:href="@{'/articles/' + ${article.id}}"/>
