@@ -55,4 +55,33 @@ public class ArticleController {
     public void saveArticle(@RequestBody ArticleDto dto){
         articleService.saveArticle(dto);
     }
+
+    //강의를 보기 전 내가 먼저 검색 기능 구현 해보기
+    @GetMapping("/search")
+    public String searchArticle(
+            @RequestParam String searchType,
+            @RequestParam String searchValue,
+            @PageableDefault(size = 10, sort = "createDate", direction = Sort.Direction.DESC) Pageable pageable,
+            ModelMap map
+            ){
+        System.out.println(" >>>>>>>>>> searchType : " + searchType);
+        System.out.println(" >>>>>>>>>> searchKeyword : " + searchValue);
+
+        SearchType st = switch (searchType) {
+            case "title" -> SearchType.TITLE;
+            case "content" -> SearchType.CONTENT;
+            case "nickname" -> SearchType.NICKNAME;
+            case "id" -> SearchType.ID;
+            case "hashtag" -> SearchType.HASHTAG;
+            default -> null;
+        };
+
+        Page<ArticleResponse> searchedArticles = articleService.searchArticles(st, searchValue, pageable).map(ArticleResponse::from);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), searchedArticles.getTotalPages());
+
+        map.addAttribute("articles", searchedArticles);
+        map.addAttribute("paginationBarNumbers", barNumbers);
+
+        return "articles/index";
+    }
 }
