@@ -15,13 +15,13 @@
         <div class="row">
             <div class="card card-margin search-form">
                 <div class="card-body p-0">
-                    <form id="search-form" th:action="@{/articles/search}" method="GET">
+                    <form action="/articles" method="GET">
                         <div class="row">
                             <div class="col-12">
                                 <div class="row no-gutters">
                                     <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                        <label for="searchType" hidden>검색 유형</label>
-                                        <select class="form-control" id="searchType" name="searchType">
+                                        <label for="search-type" hidden>검색 유형</label>
+                                        <select class="form-control" id="search-type" name="searchType">
                                             <option value="title">제목</option>
                                             <option value="content">본문</option>
                                             <option value="id">id</option>
