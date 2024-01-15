@@ -14,7 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor //articleRepository의 생성자를 만들고 해당 클래스에 주입시켜주는 역할
 @Slf4j
 @Transactional
 @Service
