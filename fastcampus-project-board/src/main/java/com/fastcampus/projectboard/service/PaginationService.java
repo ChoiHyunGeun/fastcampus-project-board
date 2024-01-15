@@ -11,8 +11,8 @@ public class PaginationService {
 
     //1~5, 6~10 이런 식으로 5개의 페이지 씩 나눠지도록 구현
     public List<Integer> getPaginationBarNumbers(int currentPageNumber, int  totalPages) {
-        int startNumber = currentPageNumber >= BAR_LENGTH ? (BAR_LENGTH * (currentPageNumber / BAR_LENGTH)) : 0;
-        int endNumber = startNumber + Math.min(BAR_LENGTH, totalPages);
+        int startNumber = Math.max(currentPageNumber - (BAR_LENGTH / 2), 0);
+        int endNumber = Math.min(startNumber + BAR_LENGTH, totalPages);
 
         return IntStream.range(startNumber, endNumber).boxed().toList();
     }
