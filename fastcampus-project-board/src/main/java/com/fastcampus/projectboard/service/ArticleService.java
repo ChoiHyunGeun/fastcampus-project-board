@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor //articleRepository의 생성자를 만들고 해당 클래스에 주입시켜주는 역할
 @Slf4j
 @Transactional
@@ -71,9 +73,23 @@ public class ArticleService {
 
 
     }
-
     public void deleteArticle(long articleId) {
         articleRepository.deleteById(articleId);
     }
 
+    public long getArticleCount() {
+        return articleRepository.count();
+    }
+    @Transactional(readOnly = true)
+    public Page<ArticleDto> searchArticlesViaHashtag(String hashtag, Pageable pageable){
+        if(hashtag == null || hashtag.isBlank()) {
+            return Page.empty(pageable);
+        }
+
+        return articleRepository.findByHashtag(hashtag, pageable).map(ArticleDto::from);
+    }
+
+    public List<String> getHashtags(){
+        return articleRepository.findAllDistinctHashtags();
+    }
 }
