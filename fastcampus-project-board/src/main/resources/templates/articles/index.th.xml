@@ -9,6 +9,23 @@
 
     <attr sel="nav" th:replace="navigator::nav"/>
 
+    <attr sel="#search-type" th:remove="all-but-first">
+        <attr sel="option[0]"
+              th:each="searchType : ${searchTypes}"
+              th:value="${searchType.name}"
+              th:text="${searchType.description}"
+              th:selected="${param.searchType != null && (param.searchType.toString == searchType.name)}"
+        />
+        <!-- th:selected="${param.searchType != null && (param.searchType.toString == searchType.name)}"
+             이 코드는
+             1. searchType을 "해시태그"로 설정하고 "java" 검색
+             2. 그 다음 검색할 땐 "스프링" 검색
+             3. 이 때 searchType은 동일하게 "해시태그"로 선택되어 있어야하는데 그 기능을 정의한 것
+
+             > 이 코드가 없으면 "java" 검색하고 searchType이 자동으로 default 옵션으로 변경되어 검색이 불편해 질 것임
+        -->
+    </attr>
+
     <attr sel="#article-table">
 <!--        <attr sel="thead">-->
 <!--            <attr sel="tr">-->

@@ -1,20 +1,25 @@
 package com.fastcampus.projectboard.service;
 
+import com.fastcampus.projectboard.domain.ArticleComment;
 import com.fastcampus.projectboard.dto.ArticleCommentDto;
 import com.fastcampus.projectboard.repository.ArticleCommentRepository;
 import com.fastcampus.projectboard.repository.ArticleRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional
 @Service
 public class ArticleCommentService {
 
     private final ArticleCommentRepository articleCommentRepository;
+    private final ArticleRepository articleRepository;
 
     @Transactional(readOnly = true)
     public List<ArticleCommentDto> searchArticleComments(Long articleId) {
@@ -25,15 +30,28 @@ public class ArticleCommentService {
     }
 
     public void saveArticleComment(ArticleCommentDto dto) {
-        /**
-         * 1. controller에서 가져온 정보(dto)를 저장
-         */
+        try {
+            articleCommentRepository.save(dto.toEntity(articleRepository.getReferenceById(dto.articleId())));
+        } catch (EntityNotFoundException e) {
+            log.warn("댓글 저장 실패. 댓글의 게시글을 찾을 수 없습니다. - dto: {}", dto);
+        }
     }
 
     public void updateArticleComment(ArticleCommentDto dto) {
+        try {
+            ArticleComment articleComment = articleCommentRepository.getReferenceById(dto.articleId());
+            String content = dto.content();
+
+            if(content != null) {
+                articleComment.setContent(content);
+            }
+        } catch (EntityNotFoundException e) {
+            log.warn("댓글 업데이트 실패. 댓글을 찾을 수 없습니다 - dto: {}", dto);
+        }
     }
 
     public void deleteArticleComment(Long articleCommentId) {
+        articleCommentRepository.deleteById(articleCommentId);
     }
 
 }
