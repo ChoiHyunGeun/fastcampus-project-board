@@ -8,19 +8,19 @@
     <nav>
         <ul class="pagination justify-content-center">
             <li class="page-item" th:if="${articles.number > 0}">
-                <a class="page-link" th:href="@{/articles?page=0}">First</a>
+                <a class="page-link" th:href="@{'/articles'(page=0, searchType=${param.searchType}, searchValue=${param.searchValue})}">First</a>
             </li>
             <li class="page-item" th:unless="${articles.first}">
-                <a class="page-link" th:href="@{'/articles'(page=${articles.number-1})}">Previous</a>
+                <a class="page-link" th:href="@{'/articles'(page=${articles.number-1}, searchType=${param.searchType}, searchValue=${param.searchValue})}">Previous</a>
             </li>
             <li class="page-item" th:each="item : ${paginationBarNumbers}">
-                <a th:class="'page-link' + (${articles.number} == ${item} ? ' disabled' : '')" th:href="@{'/articles'(page=${item})}" th:text="${item + 1}">Page number</a>
+                <a th:class="'page-link' + (${articles.number} == ${item} ? ' disabled' : '')" th:href="@{'/articles'(page=${item}, searchType=${param.searchType}, searchValue=${param.searchValue})}" th:text="${item + 1}">Page number</a>
             </li>
             <li class="page-item" th:unless="${articles.last}">
-                <a class="page-link" th:href="@{'/articles'(page=${articles.number+1})}">Next</a>
+                <a class="page-link" th:href="@{'/articles'(page=${articles.number+1}, searchType=${param.searchType}, searchValue=${param.searchValue})}">Next</a>
             </li>
             <li class="page-item" th:unless="${articles.last}">
-                <a class="page-link" th:href="@{'/articles'(page=${articles.totalPages-1})}">Last</a>
+                <a class="page-link" th:href="@{'/articles'(page=${articles.totalPages-1}, searchType=${param.searchType}, searchValue=${param.searchValue})}">Last</a>
             </li>
 
         </ul>
