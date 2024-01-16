@@ -2,6 +2,7 @@ package com.fastcampus.projectboard.repository;
 
 import com.fastcampus.projectboard.domain.Article;
 import com.fastcampus.projectboard.domain.QArticle;
+import com.fastcampus.projectboard.repository.querydsl.ArticleRepositoryCustom;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.StringExpression;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource //이 어노테이션이 있어야만 해당 엔티티에 대한 rest api를 사용할 수 있음
 public interface ArticleRepository extends
         JpaRepository<Article, Long>,
+        ArticleRepositoryCustom,
         QuerydslPredicateExecutor<Article>,     //Article 엔티티에 있는 모든 필드에 대한 기본 검색 기능 제공. 대소문자 구분하지 않고 부분 검색은 안된다.
         QuerydslBinderCustomizer<QArticle>      //위에서 안되는 부분 검색이 가능하도록 해줌
 {

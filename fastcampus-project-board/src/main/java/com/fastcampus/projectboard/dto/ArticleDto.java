@@ -15,10 +15,28 @@ public record ArticleDto(
         LocalDateTime updateDate,
         String updateUser
 ) {
+    /**
+     * ArticleDto 객체 반환
+     * @param id
+     * @param userAccountDto
+     * @param title
+     * @param content
+     * @param hashtag
+     * @param createDate
+     * @param createUser
+     * @param updateDate
+     * @param updateUser
+     * @return
+     */
     public static ArticleDto of(Long id, UserAccountDto userAccountDto, String title, String content, String hashtag, LocalDateTime createDate, String createUser, LocalDateTime updateDate, String updateUser) {
         return new ArticleDto(id, userAccountDto, title, content, hashtag, createDate, createUser, updateDate, updateUser);
     }
 
+    /**
+     * 세팅된 ArticleDto 객체 반환
+     * @param entity
+     * @return
+     */
     public static ArticleDto from(Article entity) {
         return new ArticleDto(
                 entity.getId(),
