@@ -32,6 +32,10 @@ public record ArticleDto(
         return new ArticleDto(id, userAccountDto, title, content, hashtag, createDate, createUser, updateDate, updateUser);
     }
 
+    public static ArticleDto of(UserAccountDto userAccountDto, String title, String content, String hashtag) {
+        return new ArticleDto(null, userAccountDto, title, content, hashtag, null, null, null, null);
+    }
+
     /**
      * 세팅된 ArticleDto 객체 반환
      * @param entity
