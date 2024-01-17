@@ -7,11 +7,11 @@
     <!--root경로에 있는 footer 파일에서 footer 엘리먼트를 찾아가라는 의미. 그 엘리먼트 내용으로 replace 한다는 말-->
     <attr sel="#footer" th:replace="footer :: footer" />
 
-    <attr sel="#nickname" th:text="${article.createUser}"/>
+    <attr sel="#nickname" th:text="${article.nickname}"/>
 
     <attr sel="#title" th:text="${article.title}"/>
 
-    <attr sel="#id" th:text="${article.userAccountDto.email}"/>
+    <attr sel="#id" th:text="${article.email}"/>
 
     <attr sel="#createDate" th:text="${article.createDate}"/>
 
@@ -23,8 +23,14 @@
         <attr sel="li" th:each="comment : ${articleComments}">
             <attr sel="div">
                 <attr sel="time.small" th:text="${comment.createDate}"/>
-                <attr sel="strong" th:text="${comment.createUser}"/>
+                <attr sel="strong" th:text="${comment.nickname}"/>
                 <attr sel="p" th:text="${comment.content}"/>
+
+                <attr sel="#article-buttons">
+                    <attr sel="#delete-article-form" th:action="'/articles/' + *{id} + '/delete'" th:method="post">
+                        <attr sel="#update-article" th:href="'/articles/' + *{id} + '/form'" />
+                    </attr>
+                </attr>
             </attr>
         </attr>
     </attr>

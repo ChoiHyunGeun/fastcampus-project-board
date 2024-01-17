@@ -10,7 +10,7 @@ public record UserAccountDto(
         String email,
         String nickname,
         String memo,
-        LocalDateTime createdAt,
+        LocalDateTime createUser,
         String createdBy,
         LocalDateTime updateDate,
         String updateUser
@@ -20,8 +20,8 @@ public record UserAccountDto(
         return new UserAccountDto(userId, userPassword, email, nickname, memo, null, null, null, null);
     }
 
-    public static UserAccountDto of(String userId, String userPassword, String email, String nickname, String memo, LocalDateTime createdAt, String createdBy, LocalDateTime updateDate, String updateUser) {
-        return new UserAccountDto(userId, userPassword, email, nickname, memo, createdAt, createdBy, updateDate, updateUser);
+    public static UserAccountDto of(String userId, String userPassword, String email, String nickname, String memo, LocalDateTime createdAt, String createUser, LocalDateTime updateDate, String updateUser) {
+        return new UserAccountDto(userId, userPassword, email, nickname, memo, createdAt, createUser, updateDate, updateUser);
     }
 
     public static UserAccountDto from(UserAccount entity) {
