@@ -1,6 +1,7 @@
 package com.fastcampus.projectboard.dto;
 
 import com.fastcampus.projectboard.domain.Article;
+import com.fastcampus.projectboard.domain.UserAccount;
 
 import java.time.LocalDateTime;
 
@@ -35,7 +36,6 @@ public record ArticleDto(
     public static ArticleDto of(UserAccountDto userAccountDto, String title, String content, String hashtag) {
         return new ArticleDto(null, userAccountDto, title, content, hashtag, null, null, null, null);
     }
-
     /**
      * 세팅된 ArticleDto 객체 반환
      * @param entity
@@ -55,9 +55,9 @@ public record ArticleDto(
         );
     }
 
-    public Article toEntity() {
+    public Article toEntity(UserAccount userAccount) {
         return Article.of(
-                userAccountDto.toEntity(),
+                userAccount,
                 title,
                 content,
                 hashtag

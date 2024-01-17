@@ -9,6 +9,7 @@
 
     <attr sel="nav" th:replace="navigator::nav"/>
 
+    <attr sel="#search-form" th:action="@{/articles}" th:method="get" />
     <attr sel="#search-type" th:remove="all-but-first">
         <attr sel="option[0]"
               th:each="searchType : ${searchTypes}"
@@ -25,6 +26,7 @@
              > 이 코드가 없으면 "java" 검색하고 searchType이 자동으로 default 옵션으로 변경되어 검색이 불편해 질 것임
         -->
     </attr>
+    <attr sel="#write-article" th:href="@{/articles/form}" />
 
     <attr sel="#article-table">
 <!--        <attr sel="thead">-->
