@@ -10,8 +10,8 @@ public record UserAccountDto(
         String email,
         String nickname,
         String memo,
-        LocalDateTime createUser,
-        String createdBy,
+        LocalDateTime createDate,
+        String createUser,
         LocalDateTime updateDate,
         String updateUser
 ) {

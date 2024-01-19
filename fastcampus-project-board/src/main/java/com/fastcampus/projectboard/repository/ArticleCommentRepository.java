@@ -2,6 +2,8 @@ package com.fastcampus.projectboard.repository;
 
 import com.fastcampus.projectboard.domain.ArticleComment;
 import com.fastcampus.projectboard.domain.QArticleComment;
+import com.fastcampus.projectboard.domain.UserAccount;
+import com.fastcampus.projectboard.dto.UserAccountDto;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.StringExpression;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +21,8 @@ public interface ArticleCommentRepository extends
         QuerydslBinderCustomizer<QArticleComment>{
 
     List<ArticleComment> findByArticle_Id(Long articleId);
+
+    void deleteByIdAndUserAccount_userId(Long articleCommentId, String userId);
 
 
     // 검색에 대한 세부 기능 재정의

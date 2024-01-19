@@ -66,25 +66,27 @@ public class ArticleService {
              * DB를 조회해 값을 가져오도록 동작한다는 것
              */
             Article article = articleRepository.getReferenceById(articleId);
+            UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().userId());
+            //게시글을 작성한 사용자와 현재 로그인 한 사용자의 정보가 같은지 체크
+            if( article.getUserAccount() != null && article.getUserAccount().equals(userAccount) ){
+                //not null 필드이기 때문에 방어 로직 추가
+                if(dto.title() != null) article.setTitle(dto.title());
+                if(dto.content() != null) article.setContent(dto.content());
 
-            //not null 필드이기 때문에 방어 로직 추가
-            if(dto.title() != null) article.setTitle(dto.title());
-            if(dto.content() != null) article.setContent(dto.content());
-
-            article.setHashtag(dto.hashtag());
-
+                article.setHashtag(dto.hashtag());
+            }
             /**
              * 이 함수는 클래스 레벨의 @Transactional이 선언되어 있기 때문에
              * 변화를 자동으로 감지하여 쿼리를 날려줌으로 save() 함수를 사용할 필요가 없다고 함.
              */
         } catch (EntityNotFoundException e){
-            log.warn("게시글 업데이트 실패. 게시글을 찾을 수 없습니다. - dto: {}" ,dto);
+            log.warn("게시글 업데이트 실패. 게시글을 수정하는 데 필요한 정보를 찾을 수 없습니다. - dto: {}" ,e.getLocalizedMessage());
         }
 
 
     }
-    public void deleteArticle(long articleId) {
-        articleRepository.deleteById(articleId);
+    public void deleteArticle(long articleId, String userId) {
+        articleRepository.deleteByIdAndUserAccount_UserId(articleId, userId);
     }
 
     public long getArticleCount() {
