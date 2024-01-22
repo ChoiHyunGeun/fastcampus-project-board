@@ -21,7 +21,7 @@ spring:
     properties:
       hibernate.format_sql: true
       hibernate.default_batch_fetch_size: 100
-  sql.init.mode: always
+  sql.init.mode: always #애플리케이션 실행 시 테스트 데이터로 초기화 할 건지에 대한 설정
   data:
     rest:
       base-path: /api
@@ -40,3 +40,20 @@ spring:
     driver-class-name: org.h2.Driver
   sql.init.mode: always
   test.database.replace: none
+
+---
+
+#헤로쿠가 유료화가 됨에 따라 실제로 프로젝트에 반영하진 않고 코드만 따라 작성함.
+#1. url에 username, passwork가 포함되어 있기 때문에 username과 password는 지워져야 함.
+#spring:
+#  config:
+#    activate:
+#      on-profile: heroku
+#  datasource:
+#    url: ${CLEARDB_DATABASE_URL}
+#    username: hg
+#    password: asdf1234
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#  sql.init.mode: always
