@@ -1,7 +1,8 @@
 -- 테스트 계정
 -- TODO: 테스트용이지만 비밀번호가 노출된 데이터 세팅. 개선하는 것이 좋을 지 고민해 보자.
 insert into user_account (user_id, user_password, nickname, email, memo, create_date, create_user, update_date, update_user) values
-    ('hg', 'asdf1234', 'Uno', 'uno@mail.com', 'I am Uno.', now(), 'uno', now(), 'uno')
+    ('hg', '{noop}asdf1234', 'hg', 'hg@mail.com', 'I am hg.', now(), 'uno', now(), 'uno'),
+    ('hg2', '{noop}asdf1234', 'hg2', 'hg2@mail.com', 'I am hg2.', now(), 'uno', now(), 'uno')
 ;
 
 -- 123 게시글
@@ -16,9 +17,9 @@ Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer al
 Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.
 
 Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '#purple', 'Arv', 'Keelby', '2021-05-06 11:51:24', '2021-05-23 08:34:54'),
-                                                                                                                     ('hg', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio.', 'Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.', '#purple', 'Adams', 'Thalia', '2021-08-13 08:32:22', '2021-04-02 02:58:19'),
-                                                                                                                     ('hg', 'Fusce posuere felis sed lacus.', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '#mauv', 'Johny', 'Constantin', '2021-09-05 04:28:16', '2021-10-31 17:46:08'),
-                                                                                                                     ('hg', 'Aliquam erat volutpat.', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.', '#green', 'Karlene', 'Marmaduke', '2022-01-25 16:10:23', '2021-11-08 08:47:03'),
+                                                                                                                     ('hg2', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio.', 'Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.', '#purple', 'Adams', 'Thalia', '2021-08-13 08:32:22', '2021-04-02 02:58:19'),
+                                                                                                                     ('hg2', 'Fusce posuere felis sed lacus.', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '#mauv', 'Johny', 'Constantin', '2021-09-05 04:28:16', '2021-10-31 17:46:08'),
+                                                                                                                     ('hg2', 'Aliquam erat volutpat.', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.', '#green', 'Karlene', 'Marmaduke', '2022-01-25 16:10:23', '2021-11-08 08:47:03'),
                                                                                                                      ('hg', 'Donec ut mauris eget massa tempor convallis.', 'Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.
 
 Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.', '#maroon', 'Alonso', 'Eustacia', '2022-01-26 06:33:42', '2021-12-08 11:27:30'),
