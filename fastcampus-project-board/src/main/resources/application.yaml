@@ -50,7 +50,7 @@ spring:
 #    activate:
 #      on-profile: heroku
 #  datasource:
-#    url: ${CLEARDB_DATABASE_URL}
+#    url: ${JAWSDB_URL}
 #    username: hg
 #    password: asdf1234
 #  jpa:
