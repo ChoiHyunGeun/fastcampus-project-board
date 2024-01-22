@@ -26,7 +26,9 @@
              > 이 코드가 없으면 "java" 검색하고 searchType이 자동으로 default 옵션으로 변경되어 검색이 불편해 질 것임
         -->
     </attr>
-    <attr sel="#write-article" th:href="@{/articles/form}" />
+
+    <!--sec:authorize="isAuthenticated()" > security관련 기능. 인증된 사용자만 이 컴포넌트를 사용할 수 있음(visible 포함인 듯)-->
+    <attr sel="#write-article" sec:authorize="isAuthenticated()" th:href="@{/articles/form}" />
 
     <attr sel="#article-table">
 <!--        <attr sel="thead">-->
