@@ -29,8 +29,16 @@ import java.util.List;
 @Controller
 public class ArticleController {
     private final ArticleService articleService;
-
     private final PaginationService paginationService;
+
+    /**
+     * 게시판 화면
+     * @param searchType
+     * @param searchValue
+     * @param pageable
+     * @param map
+     * @return
+     */
     @GetMapping
     public String articles(@RequestParam(required = false) SearchType searchType,
                            @RequestParam(required = false) String searchValue,
@@ -47,6 +55,12 @@ public class ArticleController {
         return "articles/index";
     }
 
+    /**
+     * 게시글 상세
+     * @param articleId
+     * @param map
+     * @return
+     */
     @GetMapping("/{articleId}")
     public String article(@PathVariable Long articleId, ModelMap map){
 
@@ -54,16 +68,19 @@ public class ArticleController {
 
         map.addAttribute("article", article);
         map.addAttribute("articleComments", article.articleCommentResponses());
+        //다음, 이전 게시물로 이동할 때 필요
         map.addAttribute("totalCount", articleService.getArticleCount());
 
         return "articles/detail";
     }
 
-    @PostMapping
-    public void saveArticle(@RequestBody ArticleDto dto){
-        articleService.saveArticle(dto);
-    }
-
+    /**
+     * 해시태그 게시판 화면
+     * @param searchValue
+     * @param pageable
+     * @param map
+     * @return
+     */
     @GetMapping("/search-hashtag")
     public String searchArticleHashtag(
             @RequestParam(required = false) String searchValue,
@@ -82,6 +99,11 @@ public class ArticleController {
         return "articles/search-hashtag";
     }
 
+    /**
+     * 게시글 등록 화면
+     * @param map
+     * @return
+     */
     @GetMapping("/form")
     public String articleForm(ModelMap map) {
         map.addAttribute("formStatus", FormStatus.CREATE);
@@ -89,6 +111,12 @@ public class ArticleController {
         return "articles/form";
     }
 
+    /**
+     * 게시글 등록
+     * @param articleRequest
+     * @param boardPrincipal
+     * @return
+     */
     @PostMapping ("/form")
     public String postNewArticle(
             ArticleRequest articleRequest,
@@ -99,6 +127,12 @@ public class ArticleController {
         return "redirect:/articles";
     }
 
+    /**
+     * 게시글 수정 화면
+     * @param articleId
+     * @param map
+     * @return
+     */
     @GetMapping("/{articleId}/form")
     public String updateArticleForm(@PathVariable Long articleId, ModelMap map) {
         ArticleResponse article = ArticleResponse.from(articleService.getArticle(articleId));
@@ -109,6 +143,13 @@ public class ArticleController {
         return "articles/form";
     }
 
+    /**
+     * 게시글 수정
+     * @param articleId
+     * @param articleRequest
+     * @param boardPrincipal
+     * @return
+     */
     @PostMapping ("/{articleId}/form")
     public String updateArticle(@PathVariable Long articleId,
                                 ArticleRequest articleRequest,
@@ -119,6 +160,12 @@ public class ArticleController {
         return "redirect:/articles/" + articleId;
     }
 
+    /**
+     * 게시글 삭제
+     * @param articleId
+     * @param boardPrincipal
+     * @return
+     */
     @PostMapping ("/{articleId}/delete")
     public String deleteArticle(
             @PathVariable Long articleId,
