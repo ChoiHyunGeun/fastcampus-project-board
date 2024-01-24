@@ -15,7 +15,7 @@
 
     <attr sel="#createDate" th:text="${article.createDate}"/>
 
-    <attr sel="#hashtag" th:text="${article.hashtag}"/>
+    <attr sel="#hashtag" th:text="${article.hashtags}"/>
 
     <attr sel="#content" th:text="${article.content}"/>
 

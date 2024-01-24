@@ -25,8 +25,6 @@ public interface ArticleRepository extends
     Page<Article> findByContentContaining(String content, Pageable pageable);
     Page<Article> findByUserAccount_UserId(String userId, Pageable pageable);
     Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
-    Page<Article> findByHashtag(String hashtag, Pageable pageable);
-
     void deleteByIdAndUserAccount_UserId(Long articleId, String userId);
 
     // 검색에 대한 세부 기능 재정의
@@ -38,7 +36,7 @@ public interface ArticleRepository extends
         bindings.excludeUnlistedProperties(true);
 
         //원하는 필드 추가
-        bindings.including(root.title, root.content, root.hashtag, root.createDate, root.createUser);
+        bindings.including(root.title, root.content, root.hashtags, root.createDate, root.createUser);
 
         /**
          * exactMatch로 동작하는데 그걸 바꿈
@@ -52,9 +50,8 @@ public interface ArticleRepository extends
          * like '${v}' 이런 쿼리임
          * bindings.bind(root.title).first(StringExpression::likeIgnoreCase);
          */
-
         bindings.bind(root.content).first(StringExpression::containsIgnoreCase);
-        bindings.bind(root.hashtag).first(StringExpression::containsIgnoreCase);
+        bindings.bind(root.hashtags.any().hashtagName).first(StringExpression::containsIgnoreCase);
         bindings.bind(root.createUser).first(StringExpression::containsIgnoreCase);
 
         /**
