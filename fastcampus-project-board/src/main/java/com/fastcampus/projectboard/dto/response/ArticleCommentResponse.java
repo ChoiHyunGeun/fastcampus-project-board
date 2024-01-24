@@ -18,6 +18,12 @@ public record ArticleCommentResponse(
         return new ArticleCommentResponse(id, content, createDate, email, nickname, userId);
     }
 
+    /**
+     * ArticleCommentRequest의 toDto를 사용해서
+     * 세팅된 ArticleCommentResponse객체를 화면에 전달할 때 사용하는 함수인 듯
+     * @param dto
+     * @return
+     */
     public static ArticleCommentResponse from(ArticleCommentDto dto) {
         String nickname = dto.userAccountDto().nickname();
         if (nickname == null || nickname.isBlank()) {

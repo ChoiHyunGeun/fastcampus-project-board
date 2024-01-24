@@ -4,13 +4,15 @@ import com.fastcampus.projectboard.domain.Article;
 import com.fastcampus.projectboard.domain.UserAccount;
 
 import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public record ArticleDto(
         Long id,
         UserAccountDto userAccountDto,
         String title,
         String content,
-        String hashtag,
+        Set<HashtagDto> hashtagDtos,
         LocalDateTime createDate,
         String createUser,
         LocalDateTime updateDate,
@@ -22,19 +24,19 @@ public record ArticleDto(
      * @param userAccountDto
      * @param title
      * @param content
-     * @param hashtag
+     * @param hashtagDtos
      * @param createDate
      * @param createUser
      * @param updateDate
      * @param updateUser
      * @return
      */
-    public static ArticleDto of(Long id, UserAccountDto userAccountDto, String title, String content, String hashtag, LocalDateTime createDate, String createUser, LocalDateTime updateDate, String updateUser) {
-        return new ArticleDto(id, userAccountDto, title, content, hashtag, createDate, createUser, updateDate, updateUser);
+    public static ArticleDto of(Long id, UserAccountDto userAccountDto, String title, String content, Set<HashtagDto> hashtagDtos, LocalDateTime createDate, String createUser, LocalDateTime updateDate, String updateUser) {
+        return new ArticleDto(id, userAccountDto, title, content, hashtagDtos, createDate, createUser, updateDate, updateUser);
     }
 
-    public static ArticleDto of(UserAccountDto userAccountDto, String title, String content, String hashtag) {
-        return new ArticleDto(null, userAccountDto, title, content, hashtag, null, null, null, null);
+    public static ArticleDto of(UserAccountDto userAccountDto, String title, String content,  Set<HashtagDto> hashtagDtos) {
+        return new ArticleDto(null, userAccountDto, title, content, hashtagDtos, null, null, null, null);
     }
     /**
      * 세팅된 ArticleDto 객체 반환
@@ -47,7 +49,9 @@ public record ArticleDto(
                 UserAccountDto.from(entity.getUserAccount()),
                 entity.getTitle(),
                 entity.getContent(),
-                entity.getHashtag(),
+                entity.getHashtags().stream()
+                        .map(HashtagDto::from)
+                        .collect(Collectors.toUnmodifiableSet()),
                 entity.getCreateDate(),
                 entity.getCreateUser(),
                 entity.getUpdateDate(),
@@ -59,8 +63,7 @@ public record ArticleDto(
         return Article.of(
                 userAccount,
                 title,
-                content,
-                hashtag
+                content
         );
     }
 

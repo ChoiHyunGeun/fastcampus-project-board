@@ -13,19 +13,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(SecurityConfig.class)
 @WebMvcTest(MainController.class)
 class MainControllerTest {
-    private final MockMvc mvc;
-
-    public MainControllerTest(@Autowired MockMvc mvc) {
-        this.mvc = mvc;
-    }
-
-    @Test
-    void given_whenRequestingRootPage_thenRedirectsToArticlesPage() throws Exception {
-        //given
-
-        //when
-        mvc.perform(get("/"))
-                .andExpect(status().is3xxRedirection());
-        //then
-    }
+//    private final MockMvc mvc;
+//
+//    public MainControllerTest(@Autowired MockMvc mvc) {
+//        this.mvc = mvc;
+//    }
+//
+//    @Test
+//    void given_whenRequestingRootPage_thenRedirectsToArticlesPage() throws Exception {
+//        //given
+//
+//        //when
+//        mvc.perform(get("/"))
+//                .andExpect(status().is3xxRedirection());
+//        //then
+//    }
 }

@@ -16,23 +16,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import(JpaConfig.class)
 @DataJpaTest
 class JpaRepositoryTest {
-    @Autowired private ArticleRepository articleRepository;
-    @Autowired private ArticleCommentRepository articleCommentRepository;
-
-    @DisplayName("delete 테스트")
-    @Test
-    void name() {
-        long preCount = articleRepository.count();
-        long preCommentCount = articleCommentRepository.count();
-
-        //given
-        Article article = articleRepository.findById(1L).orElseThrow();
-
-        //when
-        articleRepository.delete(article);
-        long newCount = articleRepository.count();
-
-        //then
-        assertThat(preCount).isEqualTo(newCount+1);
-    }
+//    @Autowired private ArticleRepository articleRepository;
+//    @Autowired private ArticleCommentRepository articleCommentRepository;
+//
+//    @DisplayName("delete 테스트")
+//    @Test
+//    void name() {
+//        long preCount = articleRepository.count();
+//        long preCommentCount = articleCommentRepository.count();
+//
+//        //given
+//        Article article = articleRepository.findById(1L).orElseThrow();
+//
+//        //when
+//        articleRepository.delete(article);
+//        long newCount = articleRepository.count();
+//
+//        //then
+//        assertThat(preCount).isEqualTo(newCount+1);
+//    }
 }

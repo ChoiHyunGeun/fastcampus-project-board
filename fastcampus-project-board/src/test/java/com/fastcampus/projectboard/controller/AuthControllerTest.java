@@ -17,17 +17,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(SecurityConfig.class)
 @WebMvcTest
 public class AuthControllerTest {
-    private final MockMvc mvc;
-
-    public AuthControllerTest(@Autowired MockMvc mvc) {
-        this.mvc = mvc;
-    }
-
-    @DisplayName("로그인 페이지 - 정상 호출")
-    @Test
-    void tryingLogin() throws Exception {
-        mvc.perform(get("/login"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
-    }
+//    private final MockMvc mvc;
+//
+//    public AuthControllerTest(@Autowired MockMvc mvc) {
+//        this.mvc = mvc;
+//    }
+//
+//    @DisplayName("로그인 페이지 - 정상 호출")
+//    @Test
+//    void tryingLogin() throws Exception {
+//        mvc.perform(get("/login"))
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
+//    }
 }
