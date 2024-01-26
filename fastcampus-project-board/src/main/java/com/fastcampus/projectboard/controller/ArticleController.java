@@ -64,7 +64,9 @@ public class ArticleController {
      */
     @GetMapping("/{articleId}")
     public String article(@PathVariable Long articleId, ModelMap map){
-
+        /**
+         * ArticleWithCommentsResponse에서 게시글, 댓글 정보 가져와서 이런식으로 한번에 뿌려주는 듯
+         */
         ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticleWithComments(articleId));
 
         map.addAttribute("article", article);
