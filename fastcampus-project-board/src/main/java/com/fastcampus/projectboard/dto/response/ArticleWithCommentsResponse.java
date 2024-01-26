@@ -49,8 +49,8 @@ public record ArticleWithCommentsResponse(
 
     private static Set<ArticleCommentResponse> organizeChildComments(Set<ArticleCommentDto> dtos) {
         Map<Long, ArticleCommentResponse> map = dtos.stream()
-                .map(ArticleCommentResponse::from)
-                .collect(Collectors.toMap(ArticleCommentResponse::id, Function.identity()));
+                        .map(ArticleCommentResponse::from)
+                        .collect(Collectors.toMap(ArticleCommentResponse::id, Function.identity()));
 
         map.values().stream()
                 .filter(ArticleCommentResponse::hasParentComment)

@@ -20,8 +20,8 @@ public record ArticleWithCommentsDto(
         LocalDateTime updateDate,
         String updateUser
 ) {
-    public static ArticleWithCommentsDto of(Long id, UserAccountDto userAccountDto, Set<ArticleCommentDto> articleCommentDtos, String title, String content, Set<HashtagDto> hashtagDtos, LocalDateTime createdAt, String createdBy, LocalDateTime updateDate, String updateUser) {
-        return new ArticleWithCommentsDto(id, userAccountDto, articleCommentDtos, title, content, hashtagDtos, createdAt, createdBy, updateDate, updateUser);
+    public static ArticleWithCommentsDto of(Long id, UserAccountDto userAccountDto, Set<ArticleCommentDto> articleCommentDtos, String title, String content, Set<HashtagDto> hashtagDtos, LocalDateTime createDate, String createdBy, LocalDateTime updateDate, String updateUser) {
+        return new ArticleWithCommentsDto(id, userAccountDto, articleCommentDtos, title, content, hashtagDtos, createDate, createdBy, updateDate, updateUser);
     }
 
     public static ArticleWithCommentsDto from(Article entity) {

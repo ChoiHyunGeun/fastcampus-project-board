@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Slf4j
 @Table(indexes = {
         @Index(columnList = "content"),
         @Index(columnList = "createUser"),
@@ -56,9 +58,7 @@ public class ArticleComment extends AuditingFields{
     }
 
     public void addChildComment(ArticleComment child) {
-        //대댓글에 부모ID 세팅
         child.setParentCommentId(this.getId());
-        //부모ID가 세팅된 대댓글을 childComments에 세팅
         this.getChildComments().add(child);
     }
 

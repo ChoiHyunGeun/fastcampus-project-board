@@ -39,7 +39,7 @@ public class ArticleCommentService {
         try {
             //article, userAccount를 어떻게 활용할건지
             //댓글을 작성할 때
-            //TODO 대댓글 구현하고 45, 47~52 라인 지우고 다시 테스트해보기
+            //TODO 대댓글 구현하고 45, 47~52 라인 지우고 다시 테스트해보기 > 결론 : 자식 댓글로 안들어감
             Article article = articleRepository.getReferenceById(dto.articleId());
             UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().userId());
             ArticleComment articleComment = dto.toEntity(article, userAccount);
