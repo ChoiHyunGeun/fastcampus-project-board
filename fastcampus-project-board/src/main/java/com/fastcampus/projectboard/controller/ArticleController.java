@@ -64,7 +64,9 @@ public class ArticleController {
      */
     @GetMapping("/{articleId}")
     public String article(@PathVariable Long articleId, ModelMap map){
-
+        /**
+         * ArticleWithCommentsResponse에서 게시글, 댓글 정보 가져와서 이런식으로 한번에 뿌려주는 듯
+         */
         ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticleWithComments(articleId));
 
         map.addAttribute("article", article);
@@ -115,6 +117,7 @@ public class ArticleController {
 
     /**
      * 게시글 등록
+     * 저장할 땐 id나 auditingFields에 있는 필드들은 자동으로 세팅되기 때문에 여기서 세팅 될 필요 없음
      * @param articleRequest
      * @param boardPrincipal
      * @return
@@ -131,6 +134,7 @@ public class ArticleController {
 
     /**
      * 게시글 수정 화면
+     * 특정한 게시물을 update해야되니 PathVariable로 게시글ID 가져와서 수정
      * @param articleId
      * @param map
      * @return
