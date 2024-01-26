@@ -571,12 +571,6 @@ Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
 
 Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', 'Wilmer', 'Ingra', '2021-07-19 14:18:17', '2022-01-23 17:29:54')
 ;
-insert into article_comment (article_id, user_id, parent_comment_id, content, create_date, update_date, create_user, update_user) values
-(49, 'hg', 1, '퍼가요~', '2023-07-22 11:21:23', '2023-08-02 06:23:47', 'hg', 'hg')
-,(49, 'hg', 1, '퍼가요~', '2023-08-31 21:50:53', '2023-03-21 20:30:45', 'hg', 'hg')
-,(49, 'hg', 1, '퍼가요~', '2023-08-22 10:37:21', '2023-07-12 15:26:18', 'hg', 'hg')
-,(49, 'hg2', 1, '퍼가요~', '2023-07-25 05:21:19', '2023-10-07 22:24:08', 'hg2', 'hg2')
-,(49, 'hg2', 1, '퍼가요~', '2023-05-08 22:00:10', '2023-02-14 14:42:05', 'hg2', 'hg2');
 
 -- 300 댓글
 insert into article_comment (article_id, user_id, parent_comment_id, content, create_date, update_date, create_user, update_user) values
@@ -881,6 +875,13 @@ insert into article_comment (article_id, user_id, parent_comment_id, content, cr
                                                                                                                                       (56, 'hg', null, 'Sed ante. Vivamus tortor. Duis mattis egestas metus.', '2021-11-18 01:32:48', '2021-06-06 01:59:25', 'Vittorio', 'Milty'),
                                                                                                                                       (19, 'hg', null, 'In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.', '2021-05-07 23:57:29', '2021-04-03 21:55:11', 'Oliver', 'Graehme')
 ;
+
+insert into article_comment (article_id, user_id, parent_comment_id, content, create_date, update_date, create_user, update_user) values
+(49, 'hg', 1, '퍼가요~', '2023-07-22 11:21:23', '2023-08-02 06:23:47', 'hg', 'hg')
+,(49, 'hg', 1, '퍼가요~', '2023-08-31 21:50:53', '2023-03-21 20:30:45', 'hg', 'hg')
+,(49, 'hg', 1, '퍼가요~', '2023-08-22 10:37:21', '2023-07-12 15:26:18', 'hg', 'hg')
+,(49, 'hg2', 1, '퍼가요~', '2023-07-25 05:21:19', '2023-10-07 22:24:08', 'hg2', 'hg2')
+,(49, 'hg2', 1, '퍼가요~', '2023-05-08 22:00:10', '2023-02-14 14:42:05', 'hg2', 'hg2');
 
 insert into hashtag (hashtag_name, create_date, update_date, create_user, update_user) values
                                                                                          ('blue', now(), now(), 'hg', 'hg'),
