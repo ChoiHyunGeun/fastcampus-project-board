@@ -5,12 +5,14 @@ import com.fastcampus.projectboard.dto.request.ArticleCommentRequest;
 import com.fastcampus.projectboard.dto.security.BoardPrincipal;
 import com.fastcampus.projectboard.service.ArticleCommentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/comments")
 @Controller
