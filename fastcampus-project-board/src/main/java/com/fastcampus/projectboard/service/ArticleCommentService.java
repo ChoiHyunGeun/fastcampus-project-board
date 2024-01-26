@@ -39,10 +39,18 @@ public class ArticleCommentService {
         try {
             //article, userAccount를 어떻게 활용할건지
             //댓글을 작성할 때
+            //TODO 대댓글 구현하고 45, 47~52 라인 지우고 다시 테스트해보기
             Article article = articleRepository.getReferenceById(dto.articleId());
             UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().userId());
+            ArticleComment articleComment = dto.toEntity(article, userAccount);
 
-            articleCommentRepository.save(dto.toEntity(article, userAccount));
+            if(dto.parentCommentId() != null){
+                ArticleComment parentComment = articleCommentRepository.getReferenceById(dto.parentCommentId());
+                parentComment.addChildComment(articleComment);
+            } else {
+                articleCommentRepository.save(articleComment);
+            }
+            //articleCommentRepository.save(articleComment);
         } catch (EntityNotFoundException e) {
             log.warn("댓글 저장 실패. 댓글 작성에 필요한 정보를 찾을 수 없습니다. - dto: {}", e.getLocalizedMessage());
         }

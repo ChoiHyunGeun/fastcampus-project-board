@@ -9,11 +9,8 @@ import java.time.LocalDateTime;
 public record ArticleCommentDto(
         Long id,
         Long articleId,
-        /*
-            UserAccountDto의 속성들을 중복해서 작성하는게 아니라
-            UserAccountDto 객체 자체를 변수로 만들어서 속성들을 컨트롤 할 수 있도록 만듦
-         */
         UserAccountDto userAccountDto,
+        Long parentCommentId,
         String content,
         LocalDateTime createDate,
         String createUser,
@@ -21,11 +18,15 @@ public record ArticleCommentDto(
         String updateUser
 ) {
     public static ArticleCommentDto of(Long articleId, UserAccountDto userAccountDto, String content) {
-        return new ArticleCommentDto(null, articleId, userAccountDto, content, null, null, null, null);
+        return ArticleCommentDto.of(articleId, userAccountDto, null, content);
     }
 
-    public static ArticleCommentDto of(Long id, Long articleId, UserAccountDto userAccountDto, String content, LocalDateTime createDate, String createUser, LocalDateTime updateDate, String updateUser) {
-        return new ArticleCommentDto(id, articleId, userAccountDto, content, createDate, createUser, updateDate, updateUser);
+    public static ArticleCommentDto of(Long articleId, UserAccountDto userAccountDto, Long parentCommentId, String content) {
+        return ArticleCommentDto.of(null, articleId, userAccountDto, parentCommentId, content, null, null, null , null);
+    }
+
+    public static ArticleCommentDto of(Long id, Long articleId, UserAccountDto userAccountDto, Long parentCommentId, String content, LocalDateTime createDate, String createUser, LocalDateTime updateDate, String updateUser) {
+        return new ArticleCommentDto(id, articleId, userAccountDto, parentCommentId, content, createDate, createUser, updateDate, updateUser);
     }
 
     public static ArticleCommentDto from(ArticleComment entity) {
@@ -33,6 +34,7 @@ public record ArticleCommentDto(
                 entity.getId(),
                 entity.getArticle().getId(),
                 UserAccountDto.from(entity.getUserAccount()),
+                entity.getParentCommentId(),
                 entity.getContent(),
                 entity.getCreateDate(),
                 entity.getCreateUser(),
