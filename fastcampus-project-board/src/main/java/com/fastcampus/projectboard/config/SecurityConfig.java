@@ -29,7 +29,7 @@ public class SecurityConfig {
      * @return
      * @throws Exception
      */
-    @Bean
+    @Bean //TODO : 서버 처음 올리고 로그인을 하면 error 화면으로 이동함. 해결하기
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
