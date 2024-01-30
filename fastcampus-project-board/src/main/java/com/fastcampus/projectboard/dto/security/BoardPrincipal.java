@@ -6,8 +6,10 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,14 +19,18 @@ public record BoardPrincipal(
         Collection<? extends GrantedAuthority> authorities,
         String email,
         String nickname,
-        String memo
-) implements UserDetails {
+        String memo,
+        Map<String, Object> oAuth2Attributes
+) implements UserDetails, OAuth2User {
     /**
      * UserDetails 인터페이스는 Spring security에서 제공하는 기능이며 사용자의 정보를 담는 핵심 인터페이스임
      * 이 인터페이스를 통해 String security는 사용자의 인증 정보를 관리하고 접근을 제어함
      */
-
     public static BoardPrincipal of(String username, String password, String email, String nickname, String memo) {
+        return of(username, password, email, nickname, memo, Map.of());
+    }
+
+    public static BoardPrincipal of(String username, String password, String email, String nickname, String memo, Map<String, Object> oAuth2Attributes) {
         // 지금은 인증만 하고 권한을 다루고 있지 않아서 임의로 세팅한다.
         Set<RoleType> roleTypes = Set.of(RoleType.USER);
 
@@ -37,7 +43,8 @@ public record BoardPrincipal(
                         .collect(Collectors.toUnmodifiableSet()),
                 email,
                 nickname,
-                memo
+                memo,
+                oAuth2Attributes
         );
     }
 
@@ -140,5 +147,24 @@ public record BoardPrincipal(
         RoleType(String name){
             this.name = name;
         }
+    }
+
+
+    /**
+     * OAuth2User 인터페이스의 구현체
+     * @return
+     */
+    @Override
+    public Map<String, Object> getAttributes() {
+        return oAuth2Attributes;
+    }
+
+    /**
+     * OAuth2User 인터페이스의 구현체
+     * @return
+     */
+    @Override
+    public String getName() {
+        return username;
     }
 }
