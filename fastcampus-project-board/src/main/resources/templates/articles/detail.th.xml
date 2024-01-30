@@ -11,9 +11,9 @@
 
     <attr sel="#title" th:text="${article.title}"/>
 
-    <attr sel="#id" th:text="${article.email}"/>
+    <attr sel="#email" th:if="${article.email} != null ? ${article.email} : ''"/>
 
-    <attr sel="#createDate" th:text="${article.createDate}"/>
+    <attr sel="#createDate" th:datetime="${article.createDate}" th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm:ss')}"/>
 
     <attr sel="#hashtag" th:each="hashtag : ${article.hashtags}">
         <attr sel="a"
