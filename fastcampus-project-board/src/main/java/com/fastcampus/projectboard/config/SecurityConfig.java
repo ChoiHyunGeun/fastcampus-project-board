@@ -2,7 +2,9 @@ package com.fastcampus.projectboard.config;
 
 import com.fastcampus.projectboard.dto.UserAccountDto;
 import com.fastcampus.projectboard.dto.security.BoardPrincipal;
+import com.fastcampus.projectboard.dto.security.KakaoOAuth2Response;
 import com.fastcampus.projectboard.repository.UserAccountRepository;
+import com.fastcampus.projectboard.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -14,9 +16,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
+
+import java.nio.file.attribute.UserPrincipal;
+import java.util.UUID;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class SecurityConfig {
@@ -29,8 +40,10 @@ public class SecurityConfig {
      * @return
      * @throws Exception
      */
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Bean //TODO : 최초로 pc 켜고, 서버를 실행 시키고, 로그인을 하면 error 화면이 나옴. 딱 이 조건일 때만 최초로 발생함. 확인하고 수정하기
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
                     //.anyRequest().permitAll()
@@ -42,10 +55,11 @@ public class SecurityConfig {
                     .requestMatchers(new MvcRequestMatcher(handlerMappingIntrospector, "/articles/search-hashtag")).permitAll()
                     //.permitAll() // > 위에 정의한 경로는 누구나 들어올 수 있게 설정한거임
                     .anyRequest().authenticated() // > 위에서 정의한 경로, Request 말고는 모두 권한 체크가 필요함
-                ).formLogin().and()
-                .logout()
-                .logoutSuccessUrl("/") //로그아웃이 성공했을 때 이동할 URL설정
-                .and()
+                ).formLogin(withDefaults()) //아무 일도 안하는 기본 값으로 동작하길 원한다면 withDefaults()를 사용
+                .logout(logout -> logout.logoutSuccessUrl("/"))
+                .oauth2Login(oAuth -> oAuth
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(oAuth2UserService)))
                 .build();
     }
 
@@ -74,11 +88,11 @@ public class SecurityConfig {
     /**
      * 인증 정보, 사용자 정보를 가져온다.
      * UserDetailsService 인터페이스를 통해서 실제 인증 데이터를 가져오는 서비스 로직 구현
-     * @param userAccountRepository
+     * @param userAccountService
      * @return UserDetailsService의 추상 메서드인 loadUserByUsername가 구현된 UserDetailsService 객체의 인스턴스를 리턴
      */
     @Bean
-    public UserDetailsService userDetailsService(UserAccountRepository userAccountRepository){
+    public UserDetailsService userDetailsService(UserAccountService userAccountService){
         /**
          * 여기서 return문 안에 정의된 내용들은
          * UserDetailsService 인터페이스에 단 하나의 추상 메서드만 있기 때문에 가능한 형식이며
@@ -87,11 +101,63 @@ public class SecurityConfig {
          * return문에서 username은 loadUserByUsername(String username) <- 여기서 받은 변수이며
          * 변수로 받은 username을 통해 userAccountRepository로 사용자 정보를 조회하는 내용임.
          */
-        return username -> userAccountRepository
-                .findById(username)
-                .map(UserAccountDto::from)
+        return username -> userAccountService
+                .searchUser(username)
                 .map(BoardPrincipal::from)
                 .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다. - username : " + username));
+    }
+
+    /**
+     * 카카오 인증을 위해 추가되는 함수인데
+     * 왜 이 인터페이스가 사용되고 어떻게 구현되는지 이해가 안됨
+     * 어디를 참고해서 개발을 해야할 지 전혀 모르겠음.
+     * TODO : 반드시 설정하는 과정 혼자서 다시 한번 구현해보기
+     * @return
+     */
+    @Bean
+    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService(
+            UserAccountService userAccountService,
+            PasswordEncoder passwordEncoder
+    ) {
+        final DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
+
+        return userRequest -> {
+            OAuth2User oAuth2User = delegate.loadUser(userRequest);
+
+            KakaoOAuth2Response kakaoResponse = KakaoOAuth2Response.from(oAuth2User.getAttributes());
+
+            /**
+             * application.yaml에서 정의한
+             *   security:
+             *     oauth2:
+             *       client:
+             *         registration:
+             *           kakao: <- 이게 registrationId임
+             */
+            String registrationId = userRequest.getClientRegistration().getRegistrationId();
+            String providerId = String.valueOf(kakaoResponse.id());
+            String username = registrationId + "_" + providerId;
+            String dummyPassword = passwordEncoder.encode("{bcrypt}dummy" + UUID.randomUUID());
+
+
+            /**
+             * user정보를 조회하고 있으면 그대로 mapping하여 진행
+             * 정보가 없으면 회원가입 진행
+             */
+            return userAccountService.searchUser(username)
+                    .map(BoardPrincipal::from)
+                    .orElseGet(() ->
+                        BoardPrincipal.from(
+                                userAccountService.saveUser(
+                                        username,
+                                        dummyPassword,
+                                        kakaoResponse.email(),
+                                        kakaoResponse.nickname(),
+                                        null
+                                )
+                        )
+                    );
+        };
     }
 
     /**
