@@ -108,11 +108,16 @@ public class SecurityConfig {
     }
 
     /**
-     * 카카오 인증을 위해 추가되는 함수인데
-     * 왜 이 인터페이스가 사용되고 어떻게 구현되는지 이해가 안됨
-     * 어디를 참고해서 개발을 해야할 지 전혀 모르겠음.
-     * TODO : 반드시 설정하는 과정 혼자서 다시 한번 구현해보기
-     * @return
+     * <p>
+     * OAuth 2.0 기술을 이용한 인증 정보를 처리한다.
+     * 카카오 인증 방식을 선택.
+     *
+     * <p>
+     * TODO : 카카오 도메인에 결합되어 있는 코드. 확장을 고려하면 별도 인증 처리 서비스 클래스로 분리하는 것이 좋지만, 현재 다른 OAuth 인증 플랫폼을 사용할 예정이 없어 이렇게 마무리한다.
+     * TODO : 설정하는 부분 반드시 혼자 다시 해보기
+     * @param userAccountService  게시판 서비스의 사용자 계정을 다루는 서비스 로직
+     * @param passwordEncoder 패스워드 암호화 도구
+     * @return {@link OAuth2UserService} OAuth2 인증 사용자 정보를 읽어들이고 처리하는 서비스 인스턴스 반환
      */
     @Bean
     public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService(
