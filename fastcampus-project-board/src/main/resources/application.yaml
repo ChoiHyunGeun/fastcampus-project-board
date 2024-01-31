@@ -9,9 +9,9 @@ logging:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/board
-    username: postgres
-    password: 102501
+    url: ${LOCAL_DB_URL}
+    username: ${LOCAL_DB_USERNAME}
+    password: ${LOCAL_DB_PASSWORD}
 #    driver-class-name:  > postgresql Driver를 외울 필요 없이 url을 참조하여 자동으로 설정된다고 함.
 
 #    mysql정보 > postgresql로 마이그레이션 됨에 따라 주석처리
