@@ -27,7 +27,7 @@ public record BoardPrincipal(
      * 이 인터페이스를 통해 String security는 사용자의 인증 정보를 관리하고 접근을 제어함
      */
     public static BoardPrincipal of(String username, String password, String email, String nickname, String memo) {
-        return of(username, password, email, nickname, memo, Map.of());
+        return BoardPrincipal.of(username, password, email, nickname, memo, Map.of());
     }
 
     public static BoardPrincipal of(String username, String password, String email, String nickname, String memo, Map<String, Object> oAuth2Attributes) {
