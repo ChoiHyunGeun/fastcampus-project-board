@@ -24,7 +24,7 @@ public record BoardPrincipal(
 ) implements UserDetails, OAuth2User {
     /**
      * UserDetails 인터페이스는 Spring security에서 제공하는 기능이며 사용자의 정보를 담는 핵심 인터페이스임
-     * 이 인터페이스를 통해 String security는 사용자의 인증 정보를 관리하고 접근을 제어함
+     * 이 인터페이스를 통해 Spring security는 사용자의 인증 정보를 관리하고 접근을 제어함
      */
     public static BoardPrincipal of(String username, String password, String email, String nickname, String memo) {
         return BoardPrincipal.of(username, password, email, nickname, memo, Map.of());
