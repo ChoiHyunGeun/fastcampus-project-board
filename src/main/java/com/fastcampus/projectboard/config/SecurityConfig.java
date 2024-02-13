@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +23,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import java.nio.file.attribute.UserPrincipal;
@@ -50,6 +52,7 @@ public class SecurityConfig {
                     //.antMatchers(), mvcMatchers() > 강의에선 이걸 사용했지만 버전업이 됨에 따라 requestMatchers()를 사용
                     //순서도 중요한 것 같음. 가장 먼저 제외하고 싶은건 정적 리소스니까 가장 먼저 제외시켜주기
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                    .requestMatchers(new MvcRequestMatcher(handlerMappingIntrospector, "/api/**")).permitAll()
                     .requestMatchers(new MvcRequestMatcher(handlerMappingIntrospector, "/")).permitAll()
                     .requestMatchers(new MvcRequestMatcher(handlerMappingIntrospector, "/articles")).permitAll()
                     .requestMatchers(new MvcRequestMatcher(handlerMappingIntrospector, "/articles/search-hashtag")).permitAll()
@@ -60,6 +63,7 @@ public class SecurityConfig {
                 .oauth2Login(oAuth -> oAuth
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2UserService)))
+                .csrf(csrf -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher("/api/**")))
                 .build();
     }
 
